@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}Bookings - StayNaija{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex flex-col md:flex-row gap-8">
+        
+        <!-- Sidebar -->
+        <aside class="w-full md:w-64 flex-shrink-0">
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm sticky top-24">
+                <div class="flex items-center gap-4 mb-6">
+                    {% if agent.photo %}
+                        <img src="{{ agent.photo.url }}" alt="{{ agent.name }}" class="w-12 h-12 rounded-full object-cover">
+                    {% else %}
+                        <div class="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 font-bold text-xl">
+                            {{ agent.name|make_list|first|upper }}
+                        </div>
+                    {% endif %}
+                    <div>
+                        <h2 class="font-bold text-gray-900">{{ agent.name }}</h2>
+                        <p class="text-sm text-gray-500">Agent</p>
+                    </div>
+                </div>
+
+                <nav class="space-y-1">
+                    <a href="{% url 'apartments:dashboard' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-600 rounded-xl hover:bg-gray-50 transition-colors">
+                        📊 Overview
+                    </a>
+                    <a href="{% url 'apartments:agent_bookings' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-brand-700 bg-brand-50 rounded-xl transition-colors">
+                        📅 Bookings
+                    </a>
+                    <a href="{% url 'apartments:add_apartment' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-600 rounded-xl hover:bg-gray-50 transition-colors">
+                        ➕ Add Listing
+                    </a>
+                    <a href="{% url 'apartments:edit_profile' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-600 rounded-xl hover:bg-gray-50 transition-colors">
+                        ⚙️ Profile Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 space-y-6">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-gray-900">Manage Bookings</h1>
+            </div>
+
+            <!-- Bookings List -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                {% if bookings %}
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-100 text-sm">
+                                <th class="p-4 font-semibold text-gray-600">Guest</th>
+                                <th class="p-4 font-semibold text-gray-600">Apartment</th>
+                                <th class="p-4 font-semibold text-gray-600">Dates</th>
+                                <th class="p-4 font-semibold text-gray-600">Status</th>
+                                <th class="p-4 font-semibold text-gray-600 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 divide-solid">
+                            {% for booking in bookings %}
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="p-4">
+                                    <div class="font-medium text-gray-900">{{ booking.guest_name }}</div>
+                                    <div class="text-xs text-gray-500">{{ booking.guest_phone }}</div>
+                                    <div class="text-xs text-gray-500">{{ booking.guest_email }}</div>
+                                </td>
+                                <td class="p-4">
+                                    <div class="font-medium text-gray-900">{{ booking.apartment.title }}</div>
+                                    <div class="text-sm text-gray-500">{{ booking.apartment.location }}</div>
+                                </td>
+                                <td class="p-4">
+                                    <div class="text-sm text-gray-900">{{ booking.start_date|date:"M d, Y" }}</div>
+                                    <div class="text-xs text-gray-500">to {{ booking.end_date|date:"M d, Y" }}</div>
+                                </td>
+                                <td class="p-4">
+                                    {% if booking.status == 'pending' %}
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">Pending</span>
+                                    {% elif booking.status == 'confirmed' %}
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Confirmed</span>
+                                    {% else %}
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Cancelled</span>
+                                    {% endif %}
+                                </td>
+                                <td class="p-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        {% if booking.status == 'pending' %}
+                                            <form method="post" action="{% url 'apartments:update_booking_status' booking.pk 'confirmed' %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="text-xs bg-brand-100 text-brand-700 px-3 py-1.5 rounded-lg hover:bg-brand-200 transition-colors font-medium">Verify & Confirm</button>
+                                            </form>
+                                            <form method="post" action="{% url 'apartments:update_booking_status' booking.pk 'cancelled' %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="text-xs bg-red-50 text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-100 transition-colors font-medium">Cancel</button>
+                                            </form>
+                                        {% elif booking.status == 'confirmed' %}
+                                            <form method="post" action="{% url 'apartments:update_booking_status' booking.pk 'cancelled' %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="text-xs bg-red-50 text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-100 transition-colors font-medium">Cancel</button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                    <div class="text-xs text-gray-400 mt-2">Requested {{ booking.created_at|timesince }} ago</div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="p-12 text-center text-gray-500">
+                    <div class="text-4xl mb-3">📭</div>
+                    <p class="text-lg font-medium text-gray-900">No bookings yet</p>
+                    <p class="mt-1">When guests request to book your apartments, they will appear here.</p>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

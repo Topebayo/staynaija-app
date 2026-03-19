@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard — StayNaija{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 fade-in">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Hi, {{ agent.name }} 👋</h1>
+            <p class="text-gray-500 text-sm mt-1">Manage your apartment listings</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+            <a href="{% url 'apartments:dashboard' %}"
+                class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-brand-50 text-brand-700 hover:bg-brand-100 transition-colors">
+                📊 Overview
+            </a>
+            <a href="{% url 'apartments:agent_bookings' %}"
+                class="px-4 py-2.5 rounded-xl text-sm font-medium border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors">
+                📅 Bookings
+            </a>
+            <a href="{% url 'apartments:edit_profile' %}"
+                class="px-4 py-2.5 rounded-xl text-sm font-medium border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors">
+                ✏️ Edit Profile
+            </a>
+            <a href="{% url 'apartments:add_apartment' %}"
+                class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-brand-600 text-white hover:bg-brand-700 transition-colors">
+                + Add Apartment
+            </a>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-sm text-gray-500 mb-1">Total Listings</p>
+            <p class="text-3xl font-bold text-gray-900">{{ apartments|length }}</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-sm text-gray-500 mb-1">Available</p>
+            <p class="text-3xl font-bold text-green-600">{{ available }}</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-sm text-gray-500 mb-1">Booked</p>
+            <p class="text-3xl font-bold text-red-500">{{ booked }}</p>
+        </div>
+    </div>
+
+    <!-- Apartments Table -->
+    {% if apartments %}
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h2 class="font-semibold text-gray-900">Your Apartments</h2>
+        </div>
+
+        <!-- Desktop Table -->
+        <div class="hidden md:block overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 text-gray-500 text-left">
+                    <tr>
+                        <th class="px-6 py-3 font-medium">Apartment</th>
+                        <th class="px-6 py-3 font-medium">Location</th>
+                        <th class="px-6 py-3 font-medium">Price</th>
+                        <th class="px-6 py-3 font-medium">Status</th>
+                        <th class="px-6 py-3 font-medium text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50">
+                    {% for apt in apartments %}
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                {% if apt.image %}
+                                <img src="{{ apt.image.url }}" class="w-10 h-10 rounded-lg object-cover" alt="">
+                                {% else %}
+                                <div class="w-10 h-10 bg-brand-50 rounded-lg flex items-center justify-center">
+                                    <span class="text-brand-400 text-lg">🏠</span>
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <p class="font-medium text-gray-900">{{ apt.title }}</p>
+                                    <p class="text-xs text-gray-400">{{ apt.bedrooms }} bed · {{ apt.bathrooms }} bath
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600">{{ apt.location }}</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900">{{ apt.price_display }}</td>
+                        <td class="px-6 py-4">
+                            {% if apt.status == 'available' %}
+                            <span
+                                class="inline-flex items-center gap-1.5 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Available
+                            </span>
+                            {% else %}
+                            <span
+                                class="inline-flex items-center gap-1.5 bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Booked
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{% url 'apartments:apartment_detail' apt.pk %}"
+                                    class="text-gray-400 hover:text-brand-600 transition-colors" title="View">
+                                    👁️
+                                </a>
+                                <a href="{% url 'apartments:edit_apartment' apt.pk %}"
+                                    class="text-gray-400 hover:text-brand-600 transition-colors" title="Edit">
+                                    ✏️
+                                </a>
+                                <a href="{% url 'apartments:delete_apartment' apt.pk %}"
+                                    class="text-gray-400 hover:text-red-500 transition-colors" title="Delete">
+                                    🗑️
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div class="md:hidden divide-y divide-gray-100">
+            {% for apt in apartments %}
+            <div class="p-4">
+                <div class="flex items-start justify-between mb-2">
+                    <div>
+                        <p class="font-medium text-gray-900">{{ apt.title }}</p>
+                        <p class="text-xs text-gray-500">{{ apt.location }}</p>
+                    </div>
+                    {% if apt.status == 'available' %}
+                    <span
+                        class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Available</span>
+                    {% else %}
+                    <span class="bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">Booked</span>
+                    {% endif %}
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="font-semibold text-brand-600">{{ apt.price_display }}/night</span>
+                    <div class="flex gap-3">
+                        <a href="{% url 'apartments:edit_apartment' apt.pk %}"
+                            class="text-sm text-brand-600 hover:underline">Edit</a>
+                        <a href="{% url 'apartments:delete_apartment' apt.pk %}"
+                            class="text-sm text-red-500 hover:underline">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <!-- Empty State -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 text-center">
+        <p class="text-4xl mb-4">🏠</p>
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">No apartments yet</h3>
+        <p class="text-gray-500 mb-6 text-sm">Start listing your service apartments and reach guests across Nigeria.</p>
+        <a href="{% url 'apartments:add_apartment' %}"
+            class="bg-brand-600 text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-brand-700 transition-colors inline-block">
+            + Add Your First Apartment
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
