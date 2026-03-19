@@ -6,16 +6,16 @@
 <div class="min-h-[80vh] flex items-center justify-center px-4 py-12">
     <div class="w-full max-w-md fade-in">
         <div class="text-center mb-8">
-            <h1 class="text-2xl font-bold text-gray-900 mb-2">Become an Agent</h1>
-            <p class="text-gray-500 text-sm">Create your account and start listing apartments</p>
+            <h1 class="text-3xl font-serif font-bold text-rich-900 dark:text-white mb-2">Join the Collection</h1>
+            <p class="text-gray-500 dark:text-gray-400 text-sm font-semibold tracking-widest uppercase">Apply to list exclusive properties</p>
         </div>
 
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <div class="bg-white dark:bg-[#0a0a0a] rounded-none border border-gray-200 dark:border-rich-800 shadow-luxury p-8 transition-colors">
             <form method="POST" class="space-y-4">
                 {% csrf_token %}
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300 mb-2 mt-4">Full Name</label>
                     {{ form.name }}
                     {% if form.name.errors %}
                     <p class="text-red-500 text-xs mt-1">{{ form.name.errors.0 }}</p>
@@ -23,7 +23,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300 mb-2 mt-4">Username</label>
                     {{ form.username }}
                     {% if form.username.errors %}
                     <p class="text-red-500 text-xs mt-1">{{ form.username.errors.0 }}</p>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300 mb-2 mt-4">Email</label>
                     {{ form.email }}
                     {% if form.email.errors %}
                     <p class="text-red-500 text-xs mt-1">{{ form.email.errors.0 }}</p>
@@ -39,7 +39,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300 mb-2 mt-4">Phone Number</label>
                     {{ form.phone }}
                     {% if form.phone.errors %}
                     <p class="text-red-500 text-xs mt-1">{{ form.phone.errors.0 }}</p>
@@ -47,7 +47,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300 mb-2 mt-4">Password</label>
                     {{ form.password1 }}
                     {% if form.password1.errors %}
                     <p class="text-red-500 text-xs mt-1">{{ form.password1.errors.0 }}</p>
@@ -55,7 +55,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300 mb-2 mt-4">Confirm Password</label>
                     {{ form.password2 }}
                     {% if form.password2.errors %}
                     <p class="text-red-500 text-xs mt-1">{{ form.password2.errors.0 }}</p>
@@ -63,14 +63,14 @@
                 </div>
 
                 <button type="submit"
-                    class="w-full bg-brand-600 text-white py-3 rounded-xl font-semibold hover:bg-brand-700 transition-colors mt-2">
-                    Create Account
+                    class="w-full bg-rich-900 dark:bg-gold-500 text-white dark:text-rich-950 py-4 rounded-none font-bold uppercase tracking-widest text-xs hover:bg-gold-500 dark:hover:bg-white transition-colors mt-6 shadow-luxury">
+                    Submit Application
                 </button>
             </form>
 
-            <p class="text-center text-sm text-gray-500 mt-6">
-                Already have an account?
-                <a href="{% url 'apartments:login' %}" class="text-brand-600 font-medium hover:underline">Log in</a>
+            <p class="text-center text-sm font-semibold text-gray-500 dark:text-gray-400 mt-8 uppercase tracking-widest">
+                Already vetted?
+                <a href="{% url 'apartments:login' %}" class="text-gold-500 font-bold hover:text-rich-900 dark:hover:text-white transition-colors">Sign in</a>
             </p>
         </div>
     </div>

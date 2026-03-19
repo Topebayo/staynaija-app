@@ -24,15 +24,15 @@ class AgentSignupForm(UserCreationForm):
     """Registration form for new agents."""
     name = forms.CharField(max_length=120, widget=forms.TextInput(attrs={
         'placeholder': 'Full name',
-        'class': 'w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-sm',
+        'class': 'w-full px-4 py-3 rounded-none border border-gray-200 dark:border-rich-800 dark:bg-rich-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition text-sm',
     }))
     phone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={
         'placeholder': '+234 801 234 5678',
-        'class': 'w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-sm',
+        'class': 'w-full px-4 py-3 rounded-none border border-gray-200 dark:border-rich-800 dark:bg-rich-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition text-sm',
     }))
     email = forms.EmailField(widget=forms.EmailInput(attrs={
         'placeholder': 'you@example.com',
-        'class': 'w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-sm',
+        'class': 'w-full px-4 py-3 rounded-none border border-gray-200 dark:border-rich-800 dark:bg-rich-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition text-sm',
     }))
 
     class Meta:
@@ -42,7 +42,7 @@ class AgentSignupForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Style the default User fields
-        input_class = 'w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-sm'
+        input_class = 'w-full px-4 py-3 rounded-none border border-gray-200 dark:border-rich-800 dark:bg-rich-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition text-sm'
         self.fields['username'].widget.attrs.update({'placeholder': 'Choose a username', 'class': input_class})
         self.fields['password1'].widget.attrs.update({'placeholder': 'Create a password', 'class': input_class})
         self.fields['password2'].widget.attrs.update({'placeholder': 'Confirm password', 'class': input_class})
@@ -69,11 +69,11 @@ class LoginForm(forms.Form):
     """Simple login form."""
     username = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Username',
-        'class': 'w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-sm',
+        'class': 'w-full px-4 py-3 rounded-none border border-gray-200 dark:border-rich-800 dark:bg-rich-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition text-sm',
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Password',
-        'class': 'w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-sm',
+        'class': 'w-full px-4 py-3 rounded-none border border-gray-200 dark:border-rich-800 dark:bg-rich-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition text-sm',
     }))
 
 
@@ -87,7 +87,7 @@ class ApartmentForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        input_class = 'w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-sm'
+        input_class = 'w-full px-4 py-3 rounded-none border border-gray-200 dark:border-rich-800 dark:bg-rich-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition text-sm'
         textarea_class = input_class + ' resize-none'
         select_class = input_class
 
@@ -99,10 +99,10 @@ class ApartmentForm(forms.ModelForm):
         self.fields['bathrooms'].widget.attrs.update({'class': select_class, 'min': 1})
         self.fields['status'].widget.attrs.update({'class': select_class})
         
-        checkbox_class = 'w-4 h-4 text-brand-600 bg-gray-100 border-gray-300 rounded focus:ring-brand-500'
+        checkbox_class = 'w-4 h-4 text-gold-600 bg-gray-100 dark:bg-rich-900 border-gray-300 dark:border-rich-800 rounded-none focus:ring-gold-500'
         self.fields['amenities'].widget = forms.CheckboxSelectMultiple(attrs={'class': 'space-y-2'})
         
-        file_input_class = 'w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 cursor-pointer'
+        file_input_class = 'w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-none file:border-0 file:text-sm file:font-semibold file:bg-gray-100 dark:file:bg-rich-950 file:text-rich-900 dark:file:text-white hover:file:bg-gray-200 dark:hover:file:bg-rich-800 cursor-pointer'
         self.fields['image'].widget.attrs.update({'class': file_input_class})
         self.fields['gallery_images'].widget.attrs.update({'class': file_input_class})
 
@@ -115,12 +115,12 @@ class AgentProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        input_class = 'w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-sm'
+        input_class = 'w-full px-4 py-3 rounded-none border border-gray-200 dark:border-rich-800 dark:bg-rich-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition text-sm'
         self.fields['name'].widget.attrs.update({'class': input_class})
         self.fields['phone'].widget.attrs.update({'class': input_class})
         self.fields['email'].widget.attrs.update({'class': input_class})
         self.fields['bio'].widget = forms.Textarea(attrs={'class': input_class + ' resize-none', 'rows': 3, 'placeholder': 'Tell guests about yourself...'})
-        self.fields['photo'].widget.attrs.update({'class': 'w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 cursor-pointer'})
+        self.fields['photo'].widget.attrs.update({'class': 'w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-none file:border-0 file:text-sm file:font-semibold file:bg-gray-100 dark:file:bg-rich-950 file:text-rich-900 dark:file:text-white hover:file:bg-gray-200 dark:hover:file:bg-rich-800 cursor-pointer'})
 
 
 class BookingForm(forms.ModelForm):
@@ -131,7 +131,7 @@ class BookingForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        input_class = 'w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition text-sm'
+        input_class = 'w-full px-4 py-3 rounded-none border border-gray-200 dark:border-rich-800 dark:bg-rich-900 dark:text-white focus:border-gold-500 focus:ring-1 focus:ring-gold-500 outline-none transition text-sm'
         
         self.fields['guest_name'].widget.attrs.update({'placeholder': 'Full Name', 'class': input_class})
         self.fields['guest_email'].widget.attrs.update({'placeholder': 'Email Address', 'class': input_class})
