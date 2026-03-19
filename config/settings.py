@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-lbjpa$1l#(3c-^l36wzc9
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Set DEBUG to False if RENDER environment variable is present
-DEBUG = 'RENDER' not in os.environ
+DEBUG = True
 
 ALLOWED_HOSTS = []
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
