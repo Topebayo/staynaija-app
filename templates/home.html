@@ -5,32 +5,41 @@
 {% block content %}
 
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-brand-600 via-brand-700 to-emerald-800 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="text-center max-w-3xl mx-auto">
-            <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-4">
-                Find Your Perfect Stay <br class="hidden md:block">in Nigeria
+<section class="relative bg-brand-900 text-white overflow-hidden">
+    <!-- Decorative blurs -->
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-brand-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+    <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob" style="animation-delay: 2s;"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+        <div class="text-center max-w-4xl mx-auto">
+            <span class="inline-block py-1.5 px-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-brand-100 text-sm font-semibold tracking-wide mb-6">
+                ✨ Discover the ultimate comfort
+            </span>
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
+                Find Your Perfect Stay <br class="hidden md:block">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-accent-300">in Nigeria</span>
             </h1>
-            <p class="text-brand-100 text-lg md:text-xl mb-8">
-                Browse verified service apartments from trusted agents across Lagos, Abuja, Port Harcourt and more.
+            <p class="text-brand-100 text-lg md:text-xl font-light mb-10 max-w-2xl mx-auto leading-relaxed">
+                Browse hand-picked, verified service apartments from trusted agents across Lagos, Abuja, Port Harcourt and more.
             </p>
 
             <!-- Search Bar -->
-            <form method="GET" action="{% url 'apartments:home' %}" class="max-w-2xl mx-auto">
-                <div class="flex flex-col sm:flex-row gap-3">
+            <form method="GET" action="{% url 'apartments:home' %}" class="max-w-2xl mx-auto relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-brand-400 to-accent-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                <div class="relative flex flex-col sm:flex-row gap-3 bg-white/10 backdrop-blur-xl border border-white/20 p-2 rounded-2xl">
                     <div class="flex-1 relative">
-                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none"
+                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                         <input type="text" name="q" value="{{ query }}"
-                            placeholder="Search by agent name, location, or title..."
-                            class="w-full pl-12 pr-4 py-3.5 rounded-xl text-gray-800 bg-white shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-400 text-sm"
+                            placeholder="Search by location, title, or agent..."
+                            class="w-full pl-12 pr-4 py-4 rounded-xl text-white bg-white/5 border border-transparent focus:border-brand-400 focus:bg-white/10 placeholder-gray-300 outline-none transition-all text-base font-medium"
                             id="search-input">
                     </div>
                     <button type="submit"
-                        class="bg-gray-900 text-white px-6 py-3.5 rounded-xl font-semibold hover:bg-gray-800 transition-colors shadow-lg text-sm">
+                        class="bg-white text-brand-900 px-8 py-4 rounded-xl font-bold hover:bg-brand-50 transition-colors shadow-lg text-base hover:-translate-y-0.5 active:translate-y-0 duration-200">
                         Search
                     </button>
                 </div>
@@ -56,8 +65,8 @@
 </section>
 
 <!-- Filters -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-10">
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+    <div class="glass rounded-2xl shadow-xl shadow-brand-900/5 p-5">
         <form method="GET" action="{% url 'apartments:home' %}" class="flex flex-col md:flex-row flex-wrap items-center gap-4">
             {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
             
@@ -114,37 +123,31 @@
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
     {% if apartments %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {% for apt in apartments %}
         <a href="{% url 'apartments:apartment_detail' apt.pk %}"
-            class="card-hover fade-in bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm block">
+            class="group fade-in bg-white rounded-[2rem] overflow-hidden border border-gray-100/50 shadow-sm hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-300 block hover:-translate-y-1">
 
             <!-- Image -->
-            <div class="relative h-48 bg-gray-200">
+            <div class="relative h-56 bg-gray-100 overflow-hidden m-2 rounded-[1.5rem]">
                 {% if apt.image %}
-                <img src="{{ apt.image.url }}" alt="{{ apt.title }}" class="w-full h-full object-cover">
+                <img src="{{ apt.image.url }}" alt="{{ apt.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 {% else %}
-                <div
-                    class="w-full h-full flex items-center justify-center bg-gradient-to-br from-brand-50 to-brand-100">
-                    <svg class="w-12 h-12 text-brand-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" />
-                    </svg>
+                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-brand-50 to-brand-100 group-hover:scale-105 transition-transform duration-700">
+                    <svg class="w-12 h-12 text-brand-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" /></svg>
                 </div>
                 {% endif %}
 
                 <!-- Status Badge -->
-                <div class="absolute top-3 right-3">
+                <div class="absolute top-4 right-4">
                     {% if apt.status == 'available' %}
-                    <span
-                        class="inline-flex items-center gap-1.5 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                        <span class="w-1.5 h-1.5 bg-white rounded-full pulse-dot"></span>
+                    <span class="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md text-gray-900 border border-white/20 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                         Available
                     </span>
                     {% else %}
-                    <span
-                        class="inline-flex items-center gap-1.5 bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                        <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+                    <span class="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md text-gray-900 border border-white/20 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                        <span class="w-2 h-2 bg-red-500 rounded-full"></span>
                         Booked
                     </span>
                     {% endif %}
@@ -152,44 +155,32 @@
             </div>
 
             <!-- Content -->
-            <div class="p-5">
-                <h3 class="font-semibold text-gray-900 mb-1 line-clamp-1">{{ apt.title }}</h3>
-                <p class="text-sm text-gray-500 flex items-center gap-1 mb-3">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+            <div class="p-6 pt-3">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="font-bold text-xl text-gray-900 line-clamp-1 group-hover:text-brand-600 transition-colors">{{ apt.title }}</h3>
+                </div>
+                
+                <p class="text-sm text-gray-500 flex items-center gap-1.5 mb-4">
+                    <svg class="w-4 h-4 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                     {{ apt.location }}
                 </p>
 
                 <!-- Details -->
-                <div class="flex items-center gap-4 text-xs text-gray-500 mb-4">
-                    <span class="flex items-center gap-1">
-                        🛏️ {{ apt.bedrooms }} Bed{{ apt.bedrooms|pluralize }}
+                <div class="flex items-center gap-4 text-sm font-medium text-gray-600 mb-5 bg-gray-50 p-3 rounded-2xl">
+                    <span class="flex items-center gap-1.5">
+                        <span class="text-lg">🛏️</span> {{ apt.bedrooms }}
                     </span>
-                    <span class="flex items-center gap-1">
-                        🚿 {{ apt.bathrooms }} Bath{{ apt.bathrooms|pluralize }}
+                    <span class="flex items-center gap-1.5">
+                        <span class="text-lg">🚿</span> {{ apt.bathrooms }}
                     </span>
                 </div>
 
                 <!-- Price & Agent -->
-                <div class="flex items-center justify-between pt-3 border-t border-gray-100">
-                    <span class="text-lg font-bold text-brand-600">{{ apt.price_display }}</span>
-                    <span class="text-xs text-gray-400">per night</span>
-                </div>
-
-                <div class="flex items-center gap-2 mt-3">
-                    {% if apt.agent.photo %}
-                    <img src="{{ apt.agent.photo.url }}" alt="{{ apt.agent.name }}"
-                        class="w-6 h-6 rounded-full object-cover">
-                    {% else %}
-                    <div class="w-6 h-6 bg-brand-100 rounded-full flex items-center justify-center">
-                        <span class="text-xs font-bold text-brand-600">{{ apt.agent.name|first }}</span>
+                <div class="flex items-end justify-between pt-1">
+                    <div>
+                        <span class="text-2xl font-extrabold text-brand-600">{{ apt.price_display }}</span>
+                        <span class="text-xs font-medium text-gray-400 tracking-wide uppercase">/ night</span>
                     </div>
-                    {% endif %}
-                    <span class="text-xs text-gray-500">{{ apt.agent.name }}</span>
                 </div>
             </div>
         </a>
