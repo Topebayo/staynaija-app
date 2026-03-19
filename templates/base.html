@@ -12,6 +12,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -120,40 +121,55 @@
             }
         }
     </style>
+    
+    <!-- Dark Mode Initializer to prevent flash -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
 
-<body class="bg-[#FAF9F6] text-gray-800 min-h-screen flex flex-col selection:bg-gold-500 selection:text-[#FAF9F6]">
+<body class="bg-[#FAF9F6] dark:bg-[#0a0a0a] text-gray-800 dark:text-gray-300 min-h-screen flex flex-col selection:bg-gold-500 selection:text-white transition-colors duration-300">
 
     <!-- Navbar -->
-    <nav class="bg-[#FAF9F6] border-b border-gray-200/60 sticky top-0 z-50">
+    <nav class="bg-[#FAF9F6] dark:bg-[#0a0a0a] border-b border-gray-200/60 dark:border-rich-800 sticky top-0 z-50 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
                 <a href="{% url 'apartments:home' %}" class="flex items-center gap-2 group">
-                    <span class="text-2xl font-serif font-bold text-rich-900 tracking-wider uppercase group-hover:text-gold-500 transition-colors">
+                    <span class="text-2xl font-serif font-bold text-rich-900 dark:text-white tracking-wider uppercase group-hover:text-gold-500 transition-colors">
                         Stay<span class="text-gold-500 italic">Naija</span>
                     </span>
                 </a>
 
                 <!-- Nav Links -->
-                <div class="hidden md:flex items-center gap-8">
+                <div class="hidden md:flex items-center gap-6">
                     <a href="{% url 'apartments:home' %}"
-                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 hover:text-gold-500 transition-colors">Home</a>
+                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-gold-500 dark:hover:text-gold-500 transition-colors">Home</a>
                     <a href="{% url 'apartments:home' %}?status=available"
-                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 hover:text-gold-500 transition-colors">Available</a>
+                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-gold-500 dark:hover:text-gold-500 transition-colors">Available</a>
                     {% if user.is_authenticated %}
                     <a href="{% url 'apartments:dashboard' %}"
-                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 hover:text-gold-500 transition-colors">Dashboard</a>
+                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-gold-500 dark:hover:text-gold-500 transition-colors">Dashboard</a>
                     <a href="{% url 'apartments:logout' %}"
-                        class="text-xs font-semibold uppercase tracking-widest text-gray-400 hover:text-red-500 transition-colors">Logout</a>
+                        class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-500 transition-colors">Logout</a>
                     {% else %}
                     <a href="{% url 'apartments:login' %}"
-                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 hover:text-gold-500 transition-colors">Login</a>
+                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-gold-500 dark:hover:text-gold-500 transition-colors">Login</a>
                     <a href="{% url 'apartments:signup' %}"
-                        class="bg-rich-900 border border-rich-900 text-white text-xs uppercase tracking-widest font-semibold px-6 py-3 rounded-none hover:bg-transparent hover:text-rich-900 transition-all duration-300">
+                        class="bg-rich-900 dark:bg-gold-500 border border-rich-900 dark:border-gold-500 text-white dark:text-rich-950 text-xs uppercase tracking-widest font-semibold px-6 py-3 rounded-none hover:bg-transparent hover:text-rich-900 dark:hover:text-white dark:hover:bg-transparent transition-all duration-300">
                         Become an Agent
                     </a>
                     {% endif %}
+                    
+                    <!-- Dark Mode Toggle Button -->
+                    <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full text-sm p-2.5 transition-colors">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -165,21 +181,21 @@
                 </button>
             </div>
 
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="md:hidden hidden pb-4">
-                <a href="{% url 'apartments:home' %}"
-                    class="block py-2 text-sm text-gray-600 hover:text-brand-600">Home</a>
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="md:hidden hidden bg-[#FAF9F6] dark:bg-rich-950 border-t border-gray-200/60 dark:border-rich-800" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center transition-colors">
+                <a href="{% url 'apartments:home' %}" class="block py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gold-500 uppercase tracking-widest">Home</a>
                 <a href="{% url 'apartments:home' %}?status=available"
-                    class="block py-2 text-sm text-gray-600 hover:text-brand-600">Available</a>
+                    class="block py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gold-500 uppercase tracking-widest">Available</a>
                 {% if user.is_authenticated %}
                 <a href="{% url 'apartments:dashboard' %}"
-                    class="block py-2 text-sm text-gray-600 hover:text-brand-600">Dashboard</a>
-                <a href="{% url 'apartments:logout' %}" class="block py-2 text-sm text-red-500">Logout</a>
+                    class="block py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gold-500 uppercase tracking-widest">Dashboard</a>
+                <a href="{% url 'apartments:logout' %}"
+                    class="block py-2 text-sm text-gray-400 dark:text-gray-500 hover:text-red-500 text-center uppercase tracking-widest">Logout</a>
                 {% else %}
                 <a href="{% url 'apartments:login' %}"
-                    class="block py-2 text-sm text-gray-600 hover:text-brand-600">Login</a>
-                <a href="{% url 'apartments:signup' %}" class="block py-2 text-sm text-brand-600 font-medium">Become an
-                    Agent</a>
+                    class="block py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gold-500 uppercase tracking-widest text-center">Login</a>
+                <a href="{% url 'apartments:signup' %}" class="block py-2 text-sm text-gold-500 font-bold uppercase tracking-widest text-center">Become an Agent</a>
                 {% endif %}
             </div>
         </div>
@@ -189,7 +205,7 @@
     {% if messages %}
     <div class="fixed top-20 right-4 z-50 space-y-2" id="toast-container">
         {% for message in messages %}
-        <div class="toast bg-white border border-gray-200 shadow-lg rounded-xl px-5 py-3 flex items-center gap-3 text-sm max-w-sm fade-in"
+        <div class="toast bg-white dark:bg-rich-900 border border-gray-200 dark:border-rich-800 shadow-lg rounded-none px-5 py-4 flex items-center gap-3 text-sm font-semibold tracking-wide text-rich-900 dark:text-white max-w-sm fade-in"
             style="animation-delay: {{ forloop.counter0 }}00ms">
             {% if message.tags == 'success' %}
             <span class="text-green-500">✅</span>
@@ -260,6 +276,46 @@
     </script>
 
     {% block scripts %}{% endblock %}
+    <!-- Dark Mode Script -->
+    <script>
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Change the icons inside the button based on previous settings
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        var themeToggleBtn = document.getElementById('theme-toggle');
+
+        themeToggleBtn.addEventListener('click', function() {
+            // toggle icons inside button
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // if set via local storage previously
+            if (localStorage.getItem('theme')) {
+                if (localStorage.getItem('theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                }
+            // if NOT set via local storage previously
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

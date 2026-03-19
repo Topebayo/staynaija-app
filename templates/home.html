@@ -70,7 +70,7 @@
 
             <!-- Search Bar -->
             <form method="GET" action="{% url 'apartments:home' %}" class="max-w-3xl mx-auto relative">
-                <div class="relative flex flex-col sm:flex-row gap-0 bg-white p-1 rounded-sm shadow-2xl">
+                <div class="relative flex flex-col sm:flex-row gap-0 bg-white dark:bg-rich-900 p-1 rounded-sm shadow-2xl dark:shadow-rich-950/50 border border-transparent dark:border-rich-800 transition-colors duration-300">
                     <div class="flex-1 relative flex items-center">
                         <svg class="absolute left-6 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -78,7 +78,7 @@
                         </svg>
                         <input type="text" name="q" value="{{ query }}"
                             placeholder="Search by location or residence name..."
-                            class="w-full pl-14 pr-6 py-5 rounded-sm text-rich-900 bg-transparent placeholder-gray-400 outline-none text-sm font-medium tracking-wide"
+                            class="w-full pl-14 pr-6 py-5 rounded-sm text-rich-900 dark:text-gray-100 bg-transparent placeholder-gray-400 outline-none text-sm font-medium tracking-wide"
                             id="search-input">
                     </div>
                     <button type="submit"
@@ -108,40 +108,40 @@
 </section>
 
 <!-- Filters -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-b border-gray-200">
-    <div class="bg-white">
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-b border-gray-200 dark:border-rich-800 transition-colors duration-300">
+    <div class="bg-transparent">
         <form method="GET" action="{% url 'apartments:home' %}" class="flex flex-col md:flex-row flex-wrap items-center justify-between gap-6">
             {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
             
             <div class="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
                 <button type="submit" name="status" value=""
-                    class="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap {% if not status_filter %}bg-rich-900 text-white{% else %}bg-gray-100 text-gray-500 hover:bg-gray-200{% endif %}">
+                    class="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap {% if not status_filter %}bg-rich-900 text-white dark:bg-gold-500{% else %}bg-gray-100 dark:bg-rich-900 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-rich-800{% endif %}">
                     All Spaces
                 </button>
                 <button type="submit" name="status" value="available"
-                    class="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap {% if status_filter == 'available' %}bg-gold-500 text-white{% else %}bg-gray-100 text-gray-500 hover:bg-gray-200{% endif %}">
+                    class="px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap {% if status_filter == 'available' %}bg-gold-500 text-white{% else %}bg-gray-100 dark:bg-rich-900 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-rich-800{% endif %}">
                     Available Only
                 </button>
             </div>
 
             <div class="flex items-center gap-4 w-full md:w-auto">
-                <div class="flex items-center gap-2 border-b border-gray-300 px-2 pb-1">
+                <div class="flex items-center gap-2 border-b border-gray-300 dark:border-rich-800 px-2 pb-1">
                     <span class="text-gray-400 text-sm">₦</span>
-                    <input type="number" name="min_price" value="{{ request.GET.min_price }}" placeholder="Min Price" class="w-24 bg-transparent outline-none text-sm font-medium placeholder-gray-400">
+                    <input type="number" name="min_price" value="{{ request.GET.min_price }}" placeholder="Min Price" class="w-24 bg-transparent outline-none text-sm font-medium placeholder-gray-400 dark:text-gray-300">
                 </div>
-                <span class="text-gray-300">-</span>
-                <div class="flex items-center gap-2 border-b border-gray-300 px-2 pb-1">
+                <span class="text-gray-300 dark:text-gray-600">-</span>
+                <div class="flex items-center gap-2 border-b border-gray-300 dark:border-rich-800 px-2 pb-1">
                     <span class="text-gray-400 text-sm">₦</span>
-                    <input type="number" name="max_price" value="{{ request.GET.max_price }}" placeholder="Max Price" class="w-24 bg-transparent outline-none text-sm font-medium placeholder-gray-400">
+                    <input type="number" name="max_price" value="{{ request.GET.max_price }}" placeholder="Max Price" class="w-24 bg-transparent outline-none text-sm font-medium placeholder-gray-400 dark:text-gray-300">
                 </div>
-                <select name="bedrooms" class="border-b border-gray-300 bg-transparent px-2 pb-1 text-sm font-medium outline-none text-gray-600 focus:text-rich-900">
-                    <option value="">Beds</option>
-                    <option value="1" {% if request.GET.bedrooms == '1' %}selected{% endif %}>1 Bed</option>
-                    <option value="2" {% if request.GET.bedrooms == '2' %}selected{% endif %}>2 Beds</option>
-                    <option value="3" {% if request.GET.bedrooms == '3' %}selected{% endif %}>3 Beds</option>
-                    <option value="4" {% if request.GET.bedrooms == '4' %}selected{% endif %}>4+ Beds</option>
+                <select name="bedrooms" class="border-b border-gray-300 dark:border-rich-800 bg-transparent px-2 pb-1 text-sm font-medium outline-none text-gray-600 dark:text-gray-300 focus:text-rich-900 dark:focus:text-white dark:bg-rich-950">
+                    <option value="" class="dark:bg-rich-900">Beds</option>
+                    <option value="1" {% if request.GET.bedrooms == '1' %}selected{% endif %} class="dark:bg-rich-900">1 Bed</option>
+                    <option value="2" {% if request.GET.bedrooms == '2' %}selected{% endif %} class="dark:bg-rich-900">2 Beds</option>
+                    <option value="3" {% if request.GET.bedrooms == '3' %}selected{% endif %} class="dark:bg-rich-900">3 Beds</option>
+                    <option value="4" {% if request.GET.bedrooms == '4' %}selected{% endif %} class="dark:bg-rich-900">4+ Beds</option>
                 </select>
-                <button type="submit" class="bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-rich-900 p-2.5 rounded-full transition-colors ml-2">
+                <button type="submit" class="bg-gray-100 dark:bg-rich-900 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-rich-800 hover:text-rich-900 p-2.5 rounded-full transition-colors ml-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                     </svg>
@@ -158,26 +158,26 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {% for apt in apartments %}
         <a href="{% url 'apartments:apartment_detail' apt.pk %}"
-            class="group card-hover bg-white block">
+            class="group card-hover bg-transparent block">
             
             <!-- Image -->
-            <div class="relative h-[25rem] bg-rich-900 overflow-hidden mb-6">
+            <div class="relative h-[25rem] bg-gray-200 dark:bg-rich-900 overflow-hidden mb-6 border border-gray-200 dark:border-rich-800 transition-colors">
                 {% if apt.image %}
                 <img src="{{ apt.image.url }}" alt="{{ apt.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s] ease-out opacity-90 group-hover:opacity-100">
                 {% else %}
-                <div class="w-full h-full flex items-center justify-center bg-gray-100">
-                    <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" /></svg>
+                <div class="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-rich-900">
+                    <svg class="w-12 h-12 text-gray-300 dark:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" /></svg>
                 </div>
                 {% endif %}
 
                 <!-- Status Badge -->
                 <div class="absolute top-5 left-5">
                     {% if apt.status == 'available' %}
-                    <span class="inline-block bg-white text-rich-900 text-[10px] uppercase font-bold tracking-widest px-4 py-2">
+                    <span class="inline-block bg-white dark:bg-rich-950 text-rich-900 dark:text-white text-[10px] uppercase font-bold tracking-widest px-4 py-2 transition-colors">
                         Available
                     </span>
                     {% else %}
-                    <span class="inline-block bg-rich-900 text-white text-[10px] uppercase font-bold tracking-widest px-4 py-2">
+                    <span class="inline-block bg-rich-900 dark:bg-red-900 text-white text-[10px] uppercase font-bold tracking-widest px-4 py-2 transition-colors">
                         Booked
                     </span>
                     {% endif %}
@@ -186,19 +186,19 @@
 
             <!-- Content -->
             <div class="px-2">
-                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-3 flex items-center gap-2">
+                <p class="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest mb-3 flex items-center gap-2">
                     <span class="w-4 h-[1px] bg-gold-400"></span> {{ apt.location }}
                 </p>
-                <h3 class="font-serif text-2xl text-rich-900 mb-4 line-clamp-1 group-hover:text-gold-600 transition-colors">{{ apt.title }}</h3>
+                <h3 class="font-serif text-2xl text-rich-900 dark:text-white mb-4 line-clamp-1 group-hover:text-gold-600 dark:group-hover:text-gold-500 transition-colors">{{ apt.title }}</h3>
                 
-                <div class="flex items-center justify-between border-t border-gray-200 pt-4 mt-2">
-                    <div class="flex items-center gap-5 text-xs font-semibold text-gray-500 uppercase tracking-widest">
+                <div class="flex items-center justify-between border-t border-gray-200 dark:border-rich-800 pt-4 mt-2 transition-colors">
+                    <div class="flex items-center gap-5 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
                         <span>{{ apt.bedrooms }} BED</span>
                         <span>{{ apt.bathrooms }} BATH</span>
                     </div>
                     <div class="text-right">
-                        <span class="block text-lg font-serif font-bold text-rich-900">{{ apt.price_display }}</span>
-                        <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">/ night</span>
+                        <span class="block text-lg font-serif font-bold text-rich-900 dark:text-white">{{ apt.price_display }}</span>
+                        <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">/ Night</span>
                     </div>
                 </div>
             </div>
