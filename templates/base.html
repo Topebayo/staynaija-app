@@ -15,30 +15,30 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            200: '#ddd6fe',
-                            300: '#c4b5fd',
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                            700: '#6d28d9',
-                            800: '#5b21b6',
-                            900: '#4c1d95',
+                        gold: {
+                            50: '#fbf9f1',
+                            100: '#f5f0db',
+                            200: '#ebe0b4',
+                            300: '#e0cc87',
+                            400: '#d2b155',
+                            500: '#cca300', // Rich Gold
+                            600: '#ab7c28',
+                            700: '#895a23',
+                            800: '#714824',
+                            900: '#613e24',
                         },
-                        accent: {
-                            400: '#fb7185',
-                            500: '#f43f5e',
-                            600: '#e11d48',
+                        rich: {
+                            800: '#1c1c1c',
+                            900: '#111111',
+                            950: '#0a0a0a'
                         }
                     },
                     fontFamily: {
-                        sans: ['Outfit', 'system-ui', 'sans-serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
                     },
                     boxShadow: {
-                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
-                        'glow': '0 0 20px rgba(124, 58, 237, 0.5)',
+                        'luxury': '0 20px 40px -10px rgba(0,0,0,0.08)',
                     }
                 }
             }
@@ -47,12 +47,15 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 
     <style>
         body {
-            font-family: 'Outfit', system-ui, sans-serif;
-            background-color: #fafafa;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fdfdfd;
+        }
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
         }
 
         /* Smooth scroll */
@@ -61,35 +64,26 @@
         }
 
         .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s ease;
         }
 
         .card-hover:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px -5px rgba(124, 58, 237, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12);
         }
 
-        /* Glassmorphism utility */
-        .glass {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        /* Custom scrollbar */
+        /* Luxury scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
+            background: #fdfdfd; 
         }
         ::-webkit-scrollbar-thumb {
-            background: #c4b5fd; 
-            border-radius: 4px;
+            background: #d4d4d4; 
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #8b5cf6; 
+            background: #cca300; 
         }
 
         /* Fade in animation */
@@ -128,41 +122,35 @@
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+<body class="bg-[#fdfdfd] text-gray-800 min-h-screen flex flex-col selection:bg-gold-500 selection:text-white">
 
     <!-- Navbar -->
-    <nav class="glass sticky top-0 z-50 border-b border-brand-100/50">
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
                 <a href="{% url 'apartments:home' %}" class="flex items-center gap-2 group">
-                    <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" />
-                        </svg>
-                    </div>
-                    <span class="text-xl font-bold text-gray-900 group-hover:text-brand-600 transition-colors">
-                        Stay<span class="text-brand-600">Naija</span>
+                    <span class="text-2xl font-serif font-bold text-rich-900 tracking-wider uppercase group-hover:text-gold-500 transition-colors">
+                        Stay<span class="text-gold-500 italic">Naija</span>
                     </span>
                 </a>
 
                 <!-- Nav Links -->
-                <div class="hidden md:flex items-center gap-6">
+                <div class="hidden md:flex items-center gap-8">
                     <a href="{% url 'apartments:home' %}"
-                        class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Home</a>
+                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 hover:text-gold-500 transition-colors">Home</a>
                     <a href="{% url 'apartments:home' %}?status=available"
-                        class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Available</a>
+                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 hover:text-gold-500 transition-colors">Available</a>
                     {% if user.is_authenticated %}
                     <a href="{% url 'apartments:dashboard' %}"
-                        class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">Dashboard</a>
+                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 hover:text-gold-500 transition-colors">Dashboard</a>
                     <a href="{% url 'apartments:logout' %}"
-                        class="text-sm font-medium text-gray-500 hover:text-red-500 transition-colors">Logout</a>
+                        class="text-xs font-semibold uppercase tracking-widest text-gray-400 hover:text-red-500 transition-colors">Logout</a>
                     {% else %}
                     <a href="{% url 'apartments:login' %}"
-                        class="text-sm font-semibold text-gray-600 hover:text-brand-600 transition-colors">Login</a>
+                        class="text-xs font-semibold uppercase tracking-widest text-gray-500 hover:text-gold-500 transition-colors">Login</a>
                     <a href="{% url 'apartments:signup' %}"
-                        class="bg-gradient-to-r from-brand-600 to-brand-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:shadow-glow hover:-translate-y-0.5 transition-all duration-200">
+                        class="bg-rich-900 border border-rich-900 text-white text-xs uppercase tracking-widest font-semibold px-6 py-3 rounded-none hover:bg-transparent hover:text-rich-900 transition-all duration-300">
                         Become an Agent
                     </a>
                     {% endif %}
@@ -229,37 +217,35 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer class="bg-rich-950 text-gray-400 border-t border-gray-900 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <div>
-                    <h3 class="text-white font-bold text-lg mb-3">Stay<span class="text-brand-400">Naija</span></h3>
-                    <p class="text-sm leading-relaxed">
-                        Find trusted service apartments across Nigeria. Verified agents, real listings, no surprises.
+                    <h3 class="text-white font-serif font-bold text-2xl uppercase tracking-widest mb-4">Stay<span class="text-gold-500 italic">Naija</span></h3>
+                    <p class="text-sm leading-relaxed font-light text-gray-500">
+                        The definitive collection of luxury service apartments across Nigeria's finest neighborhoods. Curated for the discerning traveler.
                     </p>
                 </div>
                 <div>
-                    <h4 class="text-white font-semibold mb-3">Quick Links</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="{% url 'apartments:home' %}" class="hover:text-white transition-colors">All
-                                Apartments</a></li>
+                    <h4 class="text-white text-sm uppercase tracking-widest font-semibold mb-5">Curated Stays</h4>
+                    <ul class="space-y-3 text-sm font-light">
+                        <li><a href="{% url 'apartments:home' %}" class="hover:text-gold-500 transition-colors">The Collection</a></li>
                         <li><a href="{% url 'apartments:home' %}?status=available"
-                                class="hover:text-white transition-colors">Available Now</a></li>
-                        <li><a href="{% url 'apartments:signup' %}" class="hover:text-white transition-colors">Become an
-                                Agent</a></li>
+                                class="hover:text-gold-500 transition-colors">Available Residences</a></li>
+                        <li><a href="{% url 'apartments:signup' %}" class="hover:text-gold-500 transition-colors">Agent Partners</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-semibold mb-3">Contact</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li>Lagos, Nigeria</li>
-                        <li>info@staynaija.com</li>
+                    <h4 class="text-white text-sm uppercase tracking-widest font-semibold mb-5">Private Concierge</h4>
+                    <ul class="space-y-3 text-sm font-light text-gray-500">
+                        <li>Victoria Island, Lagos</li>
+                        <li>concierge@staynaija.luxury</li>
                         <li>+234 800 STAY NAIJA</li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-xs">
-                &copy; 2026 StayNaija. All rights reserved.
+            <div class="border-t border-rich-800 mt-12 pt-8 text-center text-xs tracking-widest text-gray-600 uppercase">
+                &copy; 2026 StayNaija. Exclusive Residences.
             </div>
         </div>
     </footer>
