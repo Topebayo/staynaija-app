@@ -52,10 +52,18 @@ class Apartment(models.Model):
     bathrooms = models.PositiveSmallIntegerField(default=1)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='available')
     image = models.ImageField(upload_to='apartments/', blank=True, null=True)
+    image_url = models.URLField(max_length=500, blank=True, help_text="External image URL (used if no uploaded image)")
     amenities = models.ManyToManyField(Amenity, blank=True, related_name='apartments')
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='apartments')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def display_image(self):
+        """Returns the best available image: uploaded file URL or external URL."""
+        if self.image:
+            return self.image.url
+        return self.image_url or ''
 
     class Meta:
         ordering = ['-created_at']
